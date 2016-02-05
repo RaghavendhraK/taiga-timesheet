@@ -1,0 +1,12 @@
+{
+  "taiga_api_url": "https://api.taiga.io",
+  "auth_details": {
+    "type": "normal",
+    "username": "someusername",
+    "password": "*********"
+  },
+  "projects": [
+    "project-1",
+    "project-2"
+  ]
+}
