@@ -1,6 +1,6 @@
-Projects = require '../lib/taiga/projects'
-Milestones = require '../lib/taiga/milestones'
-UserStories = require '../lib/taiga/user_stories'
+Projects = require './taiga/projects'
+Milestones = require './taiga/milestones'
+UserStories = require './taiga/user_stories'
 
 class SprintUS
 

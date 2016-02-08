@@ -13,7 +13,7 @@ class Taiga
     
     path = '/auth'
     method = 'post'
-    params = config.get('auth_details')
+    params = config.get('credentials.taiga')
     @callAPI path, method, params, (e, obj)=>
       return cb.apply @, [e] if e?
 

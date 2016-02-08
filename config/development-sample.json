@@ -1,12 +1,19 @@
 {
   "taiga_api_url": "https://api.taiga.io",
-  "auth_details": {
-    "type": "normal",
-    "username": "someusername",
-    "password": "*********"
+  "credentials": {
+    "taiga": {
+      "type": "normal",
+      "username": "someusername",
+      "password": "*********"
+    }, "google_sheet": {
+      "file": "/home/openly/workspace/taiga-timesheet/google_sheet_credentials.json"
+    }
   },
   "projects": [
-    "project-1",
-    "project-2"
+    {
+      "name": "Project 1",
+      "taiga_slug": "project-1",
+      "google_sheet_id": "some_id"
+    }
   ]
 }
