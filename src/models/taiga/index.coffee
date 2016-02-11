@@ -27,6 +27,7 @@ class Taiga
     if @authToken?
       options['headers'] = {
         Authorization: "Bearer #{@authToken}"
+        'x-disable-pagination': 'True'
       }
 
     params = params[0] if params?.length > 0

@@ -6,13 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "https://github.com/RaghavendhraK/taiga-timesheet.git",
   "author": "Raghavendra Karunanidhi <raghu.k@openly.co>",
   "license": "ISC",
   "dependencies": {
     "async": "^1.5.2",
+    "change-case": "2.3.1",
     "config": "1.19.0",
-    "google-spreadsheet": "1.1.3",
-    "request": "2.69.0",
     "restify": "4.0.3",
     "underscore": "^1.8.3"
   }
