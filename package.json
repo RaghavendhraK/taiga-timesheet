@@ -13,6 +13,8 @@
     "async": "^1.5.2",
     "change-case": "2.3.1",
     "config": "1.19.0",
+    "moment": "2.11.2",
+    "msexcel-builder": "0.0.2",
     "restify": "4.0.3",
     "underscore": "^1.8.3"
   }

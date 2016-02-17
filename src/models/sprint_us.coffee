@@ -113,7 +113,6 @@ class SprintUSTasks
           totalTimeObj = {}
           fullNames = {}
           for task in usTasks
-            console.log Object.keys(task), task['assigned_to_extra_info']
             unless task['assigned_to_extra_info']?
               task['assigned_to_extra_info'] = {
                 username: 'NotAssignedTask'
