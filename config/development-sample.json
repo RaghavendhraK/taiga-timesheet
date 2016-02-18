@@ -10,7 +10,10 @@
   "projects": [
     {
       "name": "Project 1",
-      "taiga_slug": "project-1"
+      "taiga_slug": "project-1",
+      "users": {
+        "taiga_username": "Excel Display name"
+      }
     }
   ]
 }

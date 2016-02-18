@@ -8,27 +8,28 @@ async = require 'async'
 _ = require 'underscore'
 
 class SprintUSTasks
+  constructor: (options)->
+    @taigaOptions = options
 
   getByProjectSlug: (projectSlug, cb)->
-
     projectName = null
     projectId = null
-    getProject = (asyncCb)->
-      projectsModel = new Projects
+    getProject = (asyncCb)=>
+      projectsModel = new Projects @taigaOptions
       projectsModel.getProjectsBySlug projectSlug, (e, project)->
         return asyncCb(e) if e?
 
         projectName = project.name
         projectId = project.id
-        console.log 'Project', projectName, projectSlug, projectId
+        console.log "Project: #{projectName}, #{projectSlug}, #{projectId}"
         return asyncCb(null, projectId)
 
     sprintId = null
     sprintName = null
     sprintFromDate = null
     sprintToDate = null
-    getMileStone = (projectId, asyncCb)->
-      milestonesModel = new Milestones
+    getMileStone = (projectId, asyncCb)=>
+      milestonesModel = new Milestones @taigaOptions
       milestonesModel.getByProjectId projectId, (e, milestones)->
         return asyncCb(e) if e?
         
@@ -44,37 +45,37 @@ class SprintUSTasks
         sprintName = sprint.name
         sprintFromDate = sprint.estimated_start
         sprintToDate = sprint.estimated_finish
-        console.log 'Sprint', sprintName, sprintId
+        console.log "Sprint: #{sprintName}, #{sprintId}"
         return asyncCb(null, sprintId)
 
     userStories = []
-    getUserStories = (asyncCb)->
-      userStoriesModel = new UserStories
+    getUserStories = (asyncCb)=>
+      userStoriesModel = new UserStories @taigaOptions
       userStoriesModel.getByMilestoneId sprintId, (e, result)->
         return asyncCb(e) if e?
 
         userStories = result
-        console.log 'Userstories', userStories.length
+        console.log 'Userstories:', userStories.length
         return asyncCb(null, userStories)
 
     tasks = []
-    getTasks = (asyncCb)->
-      tasksModel = new Tasks
-      tasksModel.getByMilestoneId sprintId, (e, response)->
+    getTasks = (asyncCb)=>
+      tasksModel = new Tasks @taigaOptions
+      tasksModel.getByMilestoneId sprintId, (e, response)=>
         return asyncCb(e) if e?
 
         tasks = response
         
         taskIds = _.pluck tasks, 'id'
         
-        timeLogModel = new TimeLog
+        timeLogModel = new TimeLog @taigaOptions
         timeLogModel.getTimeLogs projectId, taskIds, (e, result)->
           return asyncCb(e) if e?
           
           for task in response
             task['time_log'] = result[task['id']]
 
-          console.log 'Tasks', tasks.length
+          console.log 'Tasks:', tasks.length
           return asyncCb(null, tasks)
 
     getUserStoriesAndTasks = (sprintId, asyncCb)->
@@ -108,7 +109,7 @@ class SprintUSTasks
         }
         
         usTasks = _.where tasks, {user_story: us.id}
-        console.log 'usTasks', usTasks.length
+        console.log 'usTasks:', usTasks.length
         if usTasks?
           totalTimeObj = {}
           fullNames = {}
@@ -140,7 +141,7 @@ class SprintUSTasks
 
       return result
 
-    async.waterfall [getProject, getMileStone, getUserStoriesAndTasks], (e)->
+    async.waterfall [getProject, getMileStone, getUserStoriesAndTasks], (e)=>
       return cb.apply @, [e] if e?
 
       result = formatResults()

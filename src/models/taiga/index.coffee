@@ -3,17 +3,28 @@ qs = require 'querystring'
 
 class Taiga
 
-  constructor: ()->
+  constructor: (options)->
+    if options['taiga_api_url']?
+      url = options['taiga_api_url']
+    else
+      url = 'https://api.taiga.io'
+    
     @client = restify.createJSONClient({
-      url: config.get('taiga_api_url')
+      url: url
     })
+
+    if options['credentials']?
+      @credentials = options['credentials']
+      @authToken = null
+    else
+      throw new Error 'Credentials are required for authentication.'
 
   authorise: (cb)->
     return cb.apply @, [null, @authToken] if @authToken?
     
     path = '/auth'
     method = 'post'
-    params = config.get('credentials.taiga')
+    params = @credentials
     @callAPI path, method, params, (e, obj)=>
       return cb.apply @, [e] if e?
 
